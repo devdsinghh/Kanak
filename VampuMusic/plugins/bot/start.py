@@ -1,18 +1,22 @@
 import time
 import random
 import asyncio
+
 from pyrogram import filters
 from pyrogram.enums import ChatType
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from pyrogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    InputMediaPhoto,
+)
+
 from py_yt import VideosSearch
 
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 import config
 from VampuMusic import app
 from VampuMusic.misc import _boot_
 from VampuMusic.plugins.sudo.sudoers import sudoers_list
-from VampuMusic.utils.database import get_served_chats, get_served_users, get_sudoers
-from VampuMusic.utils import bot_sys_stats
 from VampuMusic.utils.database import (
     add_served_chat,
     add_served_user,
@@ -24,10 +28,11 @@ from VampuMusic.utils.database import (
 from VampuMusic.utils.decorators.language import LanguageStart
 from VampuMusic.utils.formatters import get_readable_time
 from VampuMusic.utils.inline import help_pannel, private_panel, start_panel
-from config import BANNED_USERS
 from strings import get_string
-    return await add_served_chat(message.chat.id)
+from config import BANNED_USERS
 
+
+# ================= IMAGES ================= #
 
 NEXIO = [
     "https://files.catbox.moe/ij3b0p.jpg",
@@ -39,24 +44,21 @@ NEXIO = [
     "https://files.catbox.moe/wyq373.jpg",
     "https://files.catbox.moe/7dwxl5.jpg",
     "https://files.catbox.moe/94v7qh.jpg",
-    "https://files.catbox.moe/ij3b0p.jpg",
     "https://files.catbox.moe/vxnw8u.jpg",
-    "https://files.catbox.moe/vxnw8u.jpg",
-    "https://files.catbox.moe/8i1ugj.jpg",
     "https://files.catbox.moe/ztzajy.jpg",
     "https://files.catbox.moe/kskt56.jpg",
 ]
 
+# ================= STICKERS ================= #
 
 Vampu_STKR = [
     "CAACAgUAAxkBAAIBO2i1Spi48ZdWCNehv-GklSI9aRYWAAJ9GAACXB-pVds_sm8brMEqHgQ",
     "CAACAgUAAxkBAAIBOmi1Sogwaoh01l5-e-lJkK1VNY6MAAIlGAACKI6wVVNEvN-6z3Z7HgQ",
     "CAACAgUAAxkBAAIBPGi1Spv1tlx90xM1Q7TRNyL0fhcJAAKDGgACZSupVbmJpWW9LmXJHgQ",
     "CAACAgUAAxkBAAIBPWi1SpxJZKxuWYsZ_G06j_G_9QGkAAIsHwACdd6xVd2HOWQPA_qtHgQ",
-    "CAACAgUAAxkBAAIBPmi1Sp4QFoLkZ0oN3d01kZQOHQRwAAI4FwACDDexVVp91U_1BZKFHgQ",
-    "CAACAgUAAxkBAAIBP2i1SqFoa4yqgl1QSISZrQ4VuYWgAAIpFQACvTqpVWqbFSKOnWYxHgQ",
-    "CAACAgUAAxkBAAIBQGi1Sqk3OGQ2jRW2rN6ZVZ7vWY2ZAAJZHQACCa-pVfefqZZtTHEdHgQ",
 ]
+
+# ================= EFFECTS ================= #
 
 EFFECT_IDS = [
     5046509860389126442,
@@ -67,157 +69,139 @@ EFFECT_IDS = [
 
 emojis = ["🥰", "🔥", "💖", "😁", "😎", "🌚", "❤️‍🔥", "♥️", "🎉", "🙈"]
 
+# ================= PRIVATE START ================= #
+
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    
     await message.react(random.choice(emojis))
 
-    sticker = await message.reply_sticker(random.choice(KRITI_STKR))
+    st = await message.reply_sticker(random.choice(Vampu_STKR))
     await asyncio.sleep(1)
-    await sticker.delete()
+    await st.delete()
 
     if len(message.text.split()) > 1:
-        name = message.text.split(None, 1)[1]
+        arg = message.text.split(None, 1)[1]
 
-        if name.startswith("help"):
-            keyboard = help_pannel(_)
+        # HELP
+        if arg.startswith("help"):
             return await message.reply_photo(
                 random.choice(NEXIO),
-                has_spoiler=True,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
-                reply_markup=keyboard,
+                reply_markup=help_pannel(_),
             )
 
-        if name.startswith("sud"):
-            await sudoers_list(client=client, message=message, _=_)
+        # SUDO LIST
+        if arg.startswith("sud"):
+            await sudoers_list(client, message, _)
             if await is_on_off(2):
-                return await app.send_message(
-                    chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                await app.send_message(
+                    config.LOGGER_ID,
+                    f"{message.from_user.mention} checked sudo list\nID: `{message.from_user.id}`",
                 )
             return
 
-        if name.startswith("inf"):
-            m = await message.reply_text("🔎")
-            query = (str(name)).replace("info_", "", 1)
-            query = f"https://www.youtube.com/watch?v={query}"
-            results = VideosSearch(query, limit=1)
-            for result in (await results.next())["result"]:
-                title = result["title"]
-                duration = result["duration"]
-                views = result["viewCount"]["short"]
-                thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-                channellink = result["channel"]["link"]
-                channel = result["channel"]["name"]
-                link = result["link"]
-                published = result["publishedTime"]
+        # TRACK INFO
+        if arg.startswith("inf"):
+            m = await message.reply_text("🔍 Searching...")
+            query = arg.replace("info_", "", 1)
+            results = VideosSearch(f"https://www.youtube.com/watch?v={query}", limit=1)
 
-            searched_text = _["start_6"].format(
-                title, duration, views, published, channellink, channel, app.mention
-            )
-            key = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(text=_["S_B_8"], url=link),
-                        InlineKeyboardButton(text=_["S_B_9"], url=config.SUPPORT_CHAT),
-                    ],
-                ]
-            )
+            for r in (await results.next())["result"]:
+                title = r["title"]
+                duration = r["duration"]
+                views = r["viewCount"]["short"]
+                thumb = r["thumbnails"][0]["url"].split("?")[0]
+                link = r["link"]
+                channel = r["channel"]["name"]
+                ch_link = r["channel"]["link"]
+                published = r["publishedTime"]
+
             await m.delete()
-            return await app.send_photo(
-                chat_id=message.chat.id,
-                photo=thumbnail,
-                has_spoiler=True,
+
+            await app.send_photo(
+                message.chat.id,
+                photo=thumb,
+                caption=_["start_6"].format(
+                    title, duration, views, published, ch_link, channel, app.mention
+                ),
                 message_effect_id=random.choice(EFFECT_IDS),
-                caption=searched_text,
-                reply_markup=key,
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(_["S_B_8"], url=link),
+                            InlineKeyboardButton(_["S_B_9"], url=config.SUPPORT_CHAT),
+                        ]
+                    ]
+                ),
             )
-            if await is_on_off(2):
-                return await app.send_message(
-                    chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
-                )
+            return
 
-    else:
-        Vampu = await message.reply_text(f"**ʜᴇʏ ʙᴧʙʏ {message.from_user.mention}**")
-        await asyncio.sleep(0.4)
-        await Vampu.edit_text("**ɪ ᴧᴍ ʏᴏᴜʀ ᴏᴡɴ ᴍᴜsɪᴄ ʙᴏᴛ..🦋**")
-        await asyncio.sleep(0.4)
-        await Vampu.edit_text("**ʜᴏᴡ ᴧʀᴇ ʏᴏᴜ ᴛᴏᴅᴧʏ.....??**")
-        await asyncio.sleep(0.4)
-        await Vampu.delete()
-
-        out = private_panel(_)
-        await message.reply_photo(
-            random.choice(NEXIO),
-            has_spoiler=True,
-            message_effect_id=random.choice(EFFECT_IDS),
-            caption=_["start_2"].format(message.from_user.mention, app.mention),
-            reply_markup=InlineKeyboardMarkup(out),
-        )
-        if await is_on_off(2):
-            return await app.send_message(
-                chat_id=config.LOGGER_ID,
-                text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
-            )
+    # NORMAL START
+    out = private_panel(_)
+    await message.reply_photo(
+        random.choice(NEXIO),
+        caption=_["start_2"].format(message.from_user.mention, app.mention),
+        message_effect_id=random.choice(EFFECT_IDS),
+        reply_markup=InlineKeyboardMarkup(out),
+    )
 
 
+# ================= GROUP START ================= #
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def start_gp(client, message: Message, _):
-    out = start_panel(_)
     uptime = int(time.time() - _boot_)
     await message.reply_photo(
         random.choice(NEXIO),
-        has_spoiler=True,
         caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
-        reply_markup=InlineKeyboardMarkup(out),
+        reply_markup=InlineKeyboardMarkup(start_panel(_)),
     )
-    return await add_served_chat(message.chat.id)
+    await add_served_chat(message.chat.id)
 
+
+# ================= WELCOME ================= #
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
     for member in message.new_chat_members:
         try:
-            language = await get_lang(message.chat.id)
-            _ = get_string(language)
+            lang = await get_lang(message.chat.id)
+            _ = get_string(lang)
+
             if await is_banned_user(member.id):
-                try:
-                    await message.chat.ban_member(member.id)
-                except:
-                    pass
+                await message.chat.ban_member(member.id)
+                return
+
             if member.id == app.id:
                 if message.chat.type != ChatType.SUPERGROUP:
                     await message.reply_text(_["start_4"])
                     return await app.leave_chat(message.chat.id)
+
                 if message.chat.id in await blacklisted_chats():
                     await message.reply_text(
                         _["start_5"].format(
                             app.mention,
                             f"https://t.me/{app.username}?start=sudolist",
                             config.SUPPORT_CHAT,
-                        ),
-                        disable_web_page_preview=True,
+                        )
                     )
                     return await app.leave_chat(message.chat.id)
 
-                out = start_panel(_)
                 await message.reply_photo(
                     random.choice(NEXIO),
-                    has_spoiler=True,
                     caption=_["start_3"].format(
                         message.from_user.mention,
                         app.mention,
                         message.chat.title,
                         app.mention,
                     ),
-                    reply_markup=InlineKeyboardMarkup(out),
+                    reply_markup=InlineKeyboardMarkup(start_panel(_)),
                 )
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
-        except Exception as ex:
-            print(ex)
+
+        except Exception as e:
+            print(e)
