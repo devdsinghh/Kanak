@@ -25,7 +25,7 @@ from VampuMusic.utils.decorators.language import LanguageStart
 from VampuMusic.utils.formatters import get_readable_time
 from VampuMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
-from strings import get_string    )
+from strings import get_string
     return await add_served_chat(message.chat.id)
 
 
