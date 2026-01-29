@@ -16,21 +16,21 @@ from VampuMusic.utils.stuffs.helper import Helper
 
 
 START_IMG = [
-    "https://files.catbox.moe/x5lytj.jpg",
-    "https://files.catbox.moe/psya34.jpg",
-    "https://files.catbox.moe/leaexg.jpg",
-    "https://files.catbox.moe/b0e4vk.jpg",
-    "https://files.catbox.moe/1b1wap.jpg",
-    "https://files.catbox.moe/ommjjk.jpg",
-    "https://files.catbox.moe/onurxm.jpg",
-    "https://files.catbox.moe/97v75k.jpg",
-    "https://files.catbox.moe/t833zy.jpg",
-    "https://files.catbox.moe/472piq.jpg",
-    "https://files.catbox.moe/qwjeyk.jpg",
-    "https://files.catbox.moe/t0hopv.jpg",
-    "https://files.catbox.moe/u5ux0j.jpg",
-    "https://files.catbox.moe/h1yk4w.jpg",
-    "https://files.catbox.moe/gl5rg8.jpg",
+    "https://files.catbox.moe/ij3b0p.jpg",
+    "https://files.catbox.moe/lna9eh.jpg",
+    "https://files.catbox.moe/8i1ugj.jpg",
+    "https://files.catbox.moe/raxhof.jpg",
+    "https://files.catbox.moe/0z6diw.jpg",
+    "https://files.catbox.moe/s8lc80.jpg",
+    "https://files.catbox.moe/wyq373.jpg",
+    "https://files.catbox.moe/7dwxl5.jpg",
+    "https://files.catbox.moe/94v7qh.jpg",
+    "https://files.catbox.moe/ij3b0p.jpg",
+    "https://files.catbox.moe/vxnw8u.jpg",
+    "https://files.catbox.moe/vxnw8u.jpg",
+    "https://files.catbox.moe/8i1ugj.jpg",
+    "https://files.catbox.moe/ztzajy.jpg",
+    "https://files.catbox.moe/kskt56.jpg",
 ]
 
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
