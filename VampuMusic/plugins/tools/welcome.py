@@ -135,7 +135,7 @@ async def greet_new_member(_, member: ChatMemberUpdated):
         try:
             pic = await app.download_media(user.photo.big_file_id, file_name=f"pp{user.id}.png")
         except AttributeError:
-            pic = "SHUKLAMUSIC/assets/upic.png"
+            pic = "VampuMusic/assets/upic.png"
 
         if temp.MELCOW.get(f"welcome-{chat_id}") is not None:
             try:
