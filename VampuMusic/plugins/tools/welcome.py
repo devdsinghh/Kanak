@@ -12,7 +12,7 @@
 #
 # ❤️ Made with dedication and love by ItzShukla
 # -----------------------------------------------
-from SHUKLAMUSIC import app
+from VampuMusic import app
 from pyrogram.errors import RPCError
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from typing import Union, Optional
