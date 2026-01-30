@@ -27,7 +27,7 @@ from pyrogram.enums import ParseMode, ChatMemberStatus
 from VampuMusic.utils.database import add_served_chat, get_assistant, is_active_chat
 from VampuMusic.misc import SUDOERS
 from VampuMusic.mongo.afkdb import PROCESS
-from VampuMusic.utils.Shukla_ban import admin_filter
+from VampuMusic.utils.VampuMusic_ban import admin_filter
 
 LOGGER = getLogger(__name__)
 
