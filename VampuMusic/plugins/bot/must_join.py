@@ -1,10 +1,13 @@
+
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import ChatAdminRequired, UserNotParticipant, ChatWriteForbidden
 from VampuMusic import app
 
-MUST_JOIN = "IlI_KRITI_OWNER_lll"
+#--------------------------
 
+MUST_JOIN = "kriti_update"
+#------------------------
 @app.on_message(filters.incoming & filters.private, group=-1)
 async def must_join_channel(app: Client, msg: Message):
     if not MUST_JOIN:
@@ -24,7 +27,9 @@ async def must_join_channel(app: Client, msg: Message):
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton("• ᴊᴏɪɴ •", url=link)],
+                                InlineKeyboardButton("• ᴊᴏɪɴ •", url="https://t.me/kriti_supprot"),
+                                InlineKeyboardButton("• ᴊᴏɪɴ •", url="https://t.me/QUIZ_BANK_BADNAM"),
+                            ]
                         ]
                     )
                 )
@@ -33,3 +38,11 @@ async def must_join_channel(app: Client, msg: Message):
                 pass
     except ChatAdminRequired:
         print(f"๏ ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀɴ ᴀᴅᴍɪɴ ɪɴ ᴛʜᴇ ᴍᴜsᴛ_ᴊᴏɪɴ ᴄʜᴀᴛ ๏: {MUST_JOIN} !")
+
+# ======================================================
+# ©️ 2025-26 All Rights Reserved by Revange 😎
+
+# 🧑‍💻 Developer : t.me/dmcatelegram
+# 🔗 Source link : https://github.com/hexamusic/REVANGEMUSIC
+# 📢 Telegram channel : t.me/dmcatelegram
+# =======================================================
