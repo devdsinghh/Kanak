@@ -1,7 +1,9 @@
 from typing import Union
+from config import OWNER_ID
 from VampuMusic import app
 from VampuMusic.utils.formatters import time_to_seconds
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
 
 def queue_markup(
     _,
@@ -66,20 +68,18 @@ def queue_back_markup(_, CPLAY):
 def aq_markup(_, chat_id):
     buttons = [
         [
-            InlineKeyboardButton(
-                text="ᴊᴏɪɴ ɴᴏᴡ",
-                url=f"https://t.me/kriti_update"
-            ),
-            InlineKeyboardButton(
-                text="ɢʀᴏᴜᴘ ᴄʜᴧᴛ",
-                url="https://t.me/kriti_supprot"
-            ),
+            InlineKeyboardButton(text="✙ ʌᴅᴅ ϻє ɪη ʏσυʀ ɢʀσυᴘ ✙", url=f"https://t.me/{app.username}?startgroup=true")
         ],
         [
-            InlineKeyboardButton(
-                text="ᴄʟᴏsᴇ",
-                callback_data="close"
-            )
+            InlineKeyboardButton(text="⌯ ᴍᴜsɪᴄ-ʙᴏᴛ ⌯", url="https://t.me/Chikurobot"),
+            InlineKeyboardButton(text="⌯ ᴀʟʟ-ʙᴏᴛs ⌯", url="https://t.me/kriti_update/21"),
+        ],
+        [
+            InlineKeyboardButton(text="⌯ ᴘʀᴏᴍᴏ ⌯", user_id=OWNER_ID),
+            InlineKeyboardButton(text="⌯ ᴄʟᴏsᴇ ⌯", callback_data="close"),
         ],
     ]
+
     return buttons
+
+
