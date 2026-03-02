@@ -9,15 +9,15 @@ from pyrogram import filters
 load_dotenv()
 
 # ======================================================
-API_ID = int(getenv("API_ID", "24168862"))
-API_HASH = getenv("API_HASH", "916a9424dd1e58ab7955001ccc0172b3")
+API_ID = int(getenv("API_ID", "24531290"))
+API_HASH = getenv("API_HASH", "f2bc008eee6bede3e024a116d22537b0")
 BOT_TOKEN = getenv("BOT_TOKEN", None)
 
 # ======================================================
-OWNER_ID = int(getenv("OWNER_ID", 8373553714))
+OWNER_ID = int(getenv("OWNER_ID", 8295320953))
 OWNER_USERNAME = getenv("OWNER_USERNAME", "Itzz_Istkhar")
-BOT_USERNAME = getenv("BOT_USERNAME", "Sukku_Music_Bot")
-BOT_NAME = getenv("BOT_NAME", "Sonali Music")
+BOT_USERNAME = getenv("BOT_USERNAME", "nova music")
+BOT_NAME = getenv("BOT_NAME", "nova music")
 ASSUSERNAME = getenv("ASSUSERNAME")
 
 # ======================================================
@@ -50,8 +50,8 @@ UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
 GIT_TOKEN = getenv("GIT_TOKEN", None)
 
 # ======================================================
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/kriti_update")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/kriti_supprot")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/+juzm7Nckwl1lZWNl")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+OaULKQ63tPg2ZTNl")
 
 # ======================================================
 SPOTIFY_CLIENT_ID = getenv("SPOTIFY_CLIENT_ID", "1c21247d714244ddbb09925dac565aed")
