@@ -15,8 +15,8 @@ BOT_TOKEN = getenv("BOT_TOKEN", None)
 
 # ======================================================
 OWNER_ID = int(getenv("OWNER_ID", 8295320953))
-OWNER_USERNAME = getenv("OWNER_USERNAME", "Itzz_Istkhar")
-BOT_USERNAME = getenv("BOT_USERNAME", "nova music")
+OWNER_USERNAME = getenv("OWNER_USERNAME", "II_you_know_panda_II")
+BOT_USERNAME = getenv("BOT_USERNAME", "UCQZR_BOT")
 BOT_NAME = getenv("BOT_NAME", "nova music")
 ASSUSERNAME = getenv("ASSUSERNAME")
 
